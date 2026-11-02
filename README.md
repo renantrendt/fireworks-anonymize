@@ -1,6 +1,6 @@
 # offline-anonymize
 
-Replaces people, companies, ID numbers, addresses, phones and emails in legal documents with fake values, on your own computer. Nothing is sent to a cloud service.
+Replaces people, companies, ID numbers, addresses, phones and emails in legal documents with fake values, on your own computer. By default nothing is sent to a cloud service; if you set `FIREWORKS_API_KEY`, the text goes to the Fireworks AI API instead of the local model.
 
 It reads PDF, Word (.docx), and email (.eml, .msg) files. It writes a copy named `ANON-<file name>` next to each input, plus a report of what it changed and which checks passed.
 
@@ -81,6 +81,29 @@ Read these before you rely on a copy.
 - **Gender of fakes depends on clues in the text.** With no clue, a first-name fake can have the wrong gender.
 - **Some common words are kept on purpose** (public agencies such as ANVISA, legal template words, languages, countries). A company whose name is one of those words will not be replaced.
 - **It needs a large Mac** for the default model, and Ollama, Tesseract and the GLiNER download.
+
+## Fireworks Buildathon results (Nov 2, 2026)
+
+Task: list every personal value in a short English text (ai4privacy/pii-masking-300k). 500 frozen test rows from the validation split; 1,000 training rows from the train split. One fixed prompt (`scripts/pii_prompt.py`).
+
+| System | Rows fully correct | Values missed | Precision | p50 time |
+|---|---|---|---|---|
+| GLM 5.3 Flash, stock | 52.8% | 10.8% | 0.886 | not measured |
+| + 8 examples in prompt | 57.8% | 8.1% | 0.908 | 4.0 s |
+| LoRA student (rank 8, 3 epochs, 17 min) | **79.0%** | **2.5%** | **0.961** | **0.9 s** |
+
+Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001.
+A 20-row smoke check ran on test rows before the full runs; no prompt changed afterwards.
+
+Reproduce:
+
+```bash
+python3 scripts/build_train_set.py            # data/train_gold.jsonl
+python3 scripts/score_fireworks.py <model> runs/<name>.jsonl [--fewshot 8]
+python3 scripts/compare_runs.py runs/<before>.jsonl runs/<after>.jsonl
+```
+
+`scripts/build_teacher_set.py` builds `data/train_teacher.jsonl`: Kimi K3's answers kept only when they match the labels (567 of 1,000). Not trained yet.
 
 ## More detail
 

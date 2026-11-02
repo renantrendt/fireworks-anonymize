@@ -1,0 +1,1 @@
+{"model": "accounts/renan-ym76yzx07ofs/models/pii-gold-glm53", "rows": 500, "row_pass": 0.79, "recall": 0.975, "precision": 0.961, "f1": 0.968, "unparsed": 0, "p50_s": 0.88, "p95_s": 6.66}
