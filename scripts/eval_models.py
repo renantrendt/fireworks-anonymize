@@ -53,6 +53,7 @@ FIREWORKS_API_KEY = os.environ.get("FIREWORKS_API_KEY") or ""
 FIREWORKS_URL = os.environ.get("FIREWORKS_URL") or "https://api.fireworks.ai/inference/v1/chat/completions"
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") or ""
 OPENAI_URL = os.environ.get("OPENAI_URL") or "https://api.openai.com/v1/chat/completions"
+OPENAI_RESPONSES_URL = os.environ.get("OPENAI_RESPONSES_URL") or "https://api.openai.com/v1/responses"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY") or ""
 ANTHROPIC_URL = os.environ.get("ANTHROPIC_URL") or "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
@@ -151,13 +152,23 @@ def call_fireworks(model: str, prompt: str, max_tokens: int, timeout: int) -> st
 
 
 def call_openai(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
+    auth = {"Authorization": "Bearer " + OPENAI_API_KEY}
+    if re.search(r"-pro(-\d|$)", model):
+        # Pro models are not on chat completions; they need the Responses API.
+        payload = {"model": model, "input": prompt, "max_output_tokens": max_tokens}
+        data = _post_json(OPENAI_RESPONSES_URL, auth, payload, timeout, "OpenAI")
+        if data.get("output_text"):
+            return data["output_text"]
+        texts = [c.get("text", "") for item in data.get("output", [])
+                 for c in (item.get("content") or [])
+                 if isinstance(c, dict) and c.get("type") == "output_text"]
+        return "".join(texts)
     payload = {"model": model,
                "messages": [{"role": "user", "content": prompt}],
                "max_completion_tokens": max_tokens}
     if not re.match(r"(gpt-5|o[134])", model.lower()):
         payload["temperature"] = 0  # gpt-5/o-series reject temperature
-    data = _post_json(OPENAI_URL, {"Authorization": "Bearer " + OPENAI_API_KEY},
-                      payload, timeout, "OpenAI")
+    data = _post_json(OPENAI_URL, auth, payload, timeout, "OpenAI")
     return (data.get("choices") or [{}])[0].get("message", {}).get("content") or ""
 
 
