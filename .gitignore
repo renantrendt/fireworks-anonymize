@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.DS_Store
+# Never commit real documents, copies, maps or term files
+*.pdf
+*.docx
+*.msg
+*.eml
+*.report.json
+_extra_terms.txt
+_keep_terms.txt
+originals/
+anonymized/
+needs-review/
