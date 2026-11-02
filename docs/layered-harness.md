@@ -181,7 +181,7 @@ Each layer is one or two API calls per text, with 8 requests in parallel; the wh
 
 ## The rest of this repository
 
-The repository's main [README](../README.md) covers the offline document anonymizer, the multi-provider model evaluation (`scripts/eval_models.py`) and the LoRA fine-tune results. Those use their own prompt and scoring (rows fully correct, values missed), so their numbers are not directly comparable with the typed F1 here.
+The repository's main [README](../README.md) covers the LoRA fine-tune results and the multi-provider model evaluation (`scripts/eval_models.py`). Those use their own prompt and scoring (rows fully correct, values missed), so their numbers are not directly comparable with the typed F1 here.
 
 ## Data and license
 
