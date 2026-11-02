@@ -1,0 +1,44 @@
+1. YOU ASK
+Draft a short reply to this client email: Hi, I'm Maria Oliveira (passport FX482913). Please send the signed contract to maria.oliveira@acme-law.com or call me at +1 415 555 0142. My address is 742 Evergreen Terrace, Springfield.
+
+2-3. COMPANY MODEL FOUND
+[{"value": "Maria", "label": "GIVENNAME"}, {"value": "Oliveira", "label": "LASTNAME"}, {"value": "FX482913", "label": "PASSPORT"}, {"value": "maria.oliveira@acme-law.com", "label": "EMAIL"}, {"value": "+1 415 555 0142", "label": "TEL"}, {"value": "742", "label": "BUILDING"}, {"value": "Evergreen Terrace", "label": "STREET"}, {"value": "Springfield", "label": "CITY"}]
+
+4. MASKED TEXT SENT OUT
+Draft a short reply to this client email: Hi, I'm [GIVENNAME_7] [LASTNAME_5] (passport [PASSPORT_6]). Please send the signed contract to [EMAIL_1] or call me at [TEL_3]. My address is [BUILDING_8] [STREET_2], [CITY_4].
+
+5. YOUR MODEL ANSWERED (sees fakes only)
+**Subject: Re: Signed Contract**
+
+Dear [GIVENNAME_7] [LASTNAME_5],
+
+Thank you for your email and for providing your details.
+
+I'll send the signed contract to [EMAIL_1] today. If anything further is needed, I'll contact you at [TEL_3].
+
+Please let me know if you have any questions in the meantime.
+
+Best regards,
+[Your Name]
+
+---
+
+Feel free to let me know if you'd like the tone adjusted (more formal/casual) or any details added, such as a timeline for sending the contract.
+
+6. ROUTER PUTS REAL VALUES BACK
+**Subject: Re: Signed Contract**
+
+Dear Maria Oliveira,
+
+Thank you for your email and for providing your details.
+
+I'll send the signed contract to maria.oliveira@acme-law.com today. If anything further is needed, I'll contact you at +1 415 555 0142.
+
+Please let me know if you have any questions in the meantime.
+
+Best regards,
+[Your Name]
+
+---
+
+Feel free to let me know if you'd like the tone adjusted (more formal/casual) or any details added, such as a timeline for sending the contract.
