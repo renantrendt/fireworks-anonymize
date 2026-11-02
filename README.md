@@ -161,10 +161,11 @@ Task: list every personal value in a short English text (ai4privacy/pii-masking-
 |---|---|---|---|---|
 | GLM 5.3 Flash, stock | 52.8% | 10.8% | 0.886 | not measured |
 | + 8 examples in prompt | 57.8% | 8.1% | 0.908 | 4.0 s |
+| + 16 examples in prompt | 56.2% | 7.0% | 0.908 | 4.3 s |
 | Kimi K3 (teacher), stock | 56.2% | 13.7% | 0.904 | 7.9 s |
 | LoRA student (rank 8, 3 epochs, 17 min) | **79.0%** | **2.5%** | **0.961** | **0.9 s** |
 
-Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001. The student also beats its teacher, Kimi K3.
+Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001. The student also beats its teacher, Kimi K3. A second scoring run of the same student gave 77.8%.
 A 20-row smoke check ran on test rows before the full runs; no prompt changed afterwards.
 
 Reproduce:
