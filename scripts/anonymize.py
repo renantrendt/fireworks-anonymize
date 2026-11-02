@@ -92,8 +92,55 @@ ID_NUMBER_RES = (
 KEEP_URL_HOSTS = ("gov.br", "planalto.gov.br", "jus.br")
 
 # A smaller Mac sets these: OFFLINE_ANON_MODEL=qwen3:8b OFFLINE_ANON_CTX=16384.
+# To use the Fireworks AI API instead of a local Ollama model, set
+# FIREWORKS_API_KEY (and optionally FIREWORKS_MODEL). Text leaves this
+# computer when the Fireworks backend is used.
 LOCAL_MODEL = os.environ.get("OFFLINE_ANON_MODEL") or "qwen3.6:35b-mlx"
 LOCAL_CTX = int(os.environ.get("OFFLINE_ANON_CTX") or 32768)
+FIREWORKS_API_KEY = os.environ.get("FIREWORKS_API_KEY") or ""
+FIREWORKS_MODEL = os.environ.get("FIREWORKS_MODEL") or "accounts/fireworks/models/qwen3-235b-a22b"
+FIREWORKS_URL = os.environ.get("FIREWORKS_URL") or "https://api.fireworks.ai/inference/v1/chat/completions"
+
+
+def llm_generate(prompt: str, max_tokens: int, timeout: int = 300) -> str:
+    """One text completion. Fireworks AI when FIREWORKS_API_KEY is set,
+    otherwise the local Ollama model."""
+    if FIREWORKS_API_KEY:
+        body = json.dumps({
+            "model": FIREWORKS_MODEL,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0,
+            "max_tokens": max_tokens,
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            FIREWORKS_URL,
+            data=body,
+            headers={"Content-Type": "application/json",
+                     "Authorization": "Bearer " + FIREWORKS_API_KEY},
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+        return (payload.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+    body = json.dumps({
+        "model": LOCAL_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "think": False,
+        "options": {"temperature": 0, "num_predict": max_tokens, "num_ctx": LOCAL_CTX},
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "http://127.0.0.1:11434/api/generate",
+        data=body,
+        headers={"Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        payload = json.loads(resp.read().decode("utf-8"))
+    return payload.get("response") or ""
+
+
+def llm_backend_name() -> str:
+    """Which model answered, for the report."""
+    return FIREWORKS_MODEL if FIREWORKS_API_KEY else LOCAL_MODEL
 LAST_LOCAL_COUNTS: dict[str, int] = {}
 
 EMAIL_TYPES = {".msg", ".eml"}
@@ -2410,7 +2457,8 @@ def docx_xml_text(path: Path) -> str:
 
 
 def ollama_identify(text: str) -> list[tuple[str, str]]:
-    """Local model lists people, companies, and CNPJ. Nothing is uploaded."""
+    """The model lists people, companies, and CNPJ. With FIREWORKS_API_KEY
+    set the text goes to the Fireworks AI API; otherwise it stays local."""
     prompt = (
         "You are a local extractor. Read the document below. "
         "Return a JSON array only. Each item is "
@@ -2422,21 +2470,7 @@ def ollama_identify(text: str) -> list[tuple[str, str]]:
         "EMPREGADORA. Do not explain. Do not wrap in markdown.\n\n"
         "DOCUMENT:\n" + text[:60000]
     )
-    body = json.dumps({
-        "model": LOCAL_MODEL,
-        "prompt": prompt,
-        "stream": False,
-        "think": False,
-        "options": {"temperature": 0, "num_predict": 2048, "num_ctx": LOCAL_CTX},
-    }).encode("utf-8")
-    req = urllib.request.Request(
-        "http://127.0.0.1:11434/api/generate",
-        data=body,
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(req, timeout=300) as resp:
-        payload = json.loads(resp.read().decode("utf-8"))
-    raw = payload.get("response") or ""
+    raw = llm_generate(prompt, 2048)
     raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.S).strip()
     start, end = raw.find("["), raw.rfind("]")
     if start < 0 or end < start:
@@ -2723,13 +2757,8 @@ def llm_says_not_a_name(word: str, text: str) -> bool:
     context = re.sub(r"\s+", " ", text[max(0, m.start() - 250): m.end() + 250])
     prompt = (f'Text: "{context}"\n\nIn this text, is the word "{word}" part of the name of a '
               f"specific person or a specific company? Answer with one word: yes or no.")
-    body = json.dumps({"model": LOCAL_MODEL, "prompt": prompt, "stream": False, "think": False,
-                       "options": {"temperature": 0, "num_predict": 8, "num_ctx": 4096}}).encode()
     try:
-        req = urllib.request.Request("http://127.0.0.1:11434/api/generate", data=body,
-                                     headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            answer = json.loads(resp.read().decode()).get("response", "")
+        answer = llm_generate(prompt, 8, timeout=120)
     except Exception:
         return False
     answer = re.sub(r"<think>.*?</think>", "", answer, flags=re.S).strip().lower()
@@ -3850,7 +3879,7 @@ def new_report(src: Path, dst: Path, mapping: dict, labels: dict,
             "pseudonymized: a real-to-fake map is kept on the owner's computer, "
             "so the owner can reverse the replacement"
         ),
-        "local_model": LOCAL_MODEL,
+        "local_model": llm_backend_name(),
         "context_model": GLINER_MODEL if gliner_enabled() else "off",
         "local_model_found": dict(local_counts if local_counts is not None else LAST_LOCAL_COUNTS),
         **extra,
