@@ -1,0 +1,196 @@
+[
+  {
+    "id": "46206B",
+    "text": "ry\\\", \\\"ENG\\\", \\\"RG14\\\", \\\"Castle 724\\\", \\\"-Ev3kZf\\\", \\\"13\\\"\\n\\n2, \\\"M\\\", \\\"Alderman\\\", \\\"harkous\\\", \\\"eliséeharkous@tutanota.com\\\", \\\"360-434-2627\\\", \\\"+300.425 291-8162\\\", \\\"GB\\\", \\\"232\\\", \\\"Lime Close\\\", \\\"Newbury\\\", \\\"ENG\\\", \\\"RG14\\\", \\\"Castle 724\\\", \\\"-Ev3kZf\\\", \\\"13\\\"\\n\\nBackground: WR2 4UA, 2nd May 2022\"",
+    "entities": [
+      {
+        "value": "ENG",
+        "label": "STATE"
+      },
+      {
+        "value": "RG14",
+        "label": "POSTCODE"
+      },
+      {
+        "value": "Castle 724",
+        "label": "SECADDRESS"
+      },
+      {
+        "value": "-Ev3kZf",
+        "label": "PASS"
+      },
+      {
+        "value": "13",
+        "label": "TIME"
+      },
+      {
+        "value": "M",
+        "label": "SEX"
+      },
+      {
+        "value": "Alderman",
+        "label": "TITLE"
+      },
+      {
+        "value": "harkous",
+        "label": "USERNAME"
+      },
+      {
+        "value": "eliséeharkous@tutanota.com",
+        "label": "EMAIL"
+      },
+      {
+        "value": "360-434-2627",
+        "label": "SOCIALNUMBER"
+      },
+      {
+        "value": "+300.425 291-8162",
+        "label": "TEL"
+      },
+      {
+        "value": "GB",
+        "label": "COUNTRY"
+      },
+      {
+        "value": "232",
+        "label": "BUILDING"
+      },
+      {
+        "value": "Lime Close",
+        "label": "STREET"
+      },
+      {
+        "value": "Newbury",
+        "label": "CITY"
+      },
+      {
+        "value": "WR2 4UA",
+        "label": "POSTCODE"
+      },
+      {
+        "value": "2nd May 2022",
+        "label": "DATE"
+      }
+    ]
+  },
+  {
+    "id": "46298B",
+    "text": "64 886 7628  \n  ID Number: KI39567YN  \n  Telephone: 0018 47.433 9415  \n  IP Address: 341a:7552:2dbb:b3c:4223:c61a:e5a0:9e21  \n  Passport: Not Available  \n  Time of Arrival: 10:41pm  \n\n- **Participant C:**\n  Name: Excellency Anaira Unknown  \n  Date of Birth: 25th June 1997  \n  Social Security Number: 392.694.2356  \n  ID Number: IL40597IU  \n  Telephone: +12 41728.9259  \n  IP Address: 233.238.137.5  \n  Passport: Not Available  \n  Time of Arrival: 09:32:03 ",
+    "entities": [
+      {
+        "value": "KI39567YN",
+        "label": "IDCARD"
+      },
+      {
+        "value": "0018 47.433 9415",
+        "label": "TEL"
+      },
+      {
+        "value": "341a:7552:2dbb:b3c:4223:c61a:e5a0:9e21",
+        "label": "IP"
+      },
+      {
+        "value": "Not Available",
+        "label": "PASSPORT"
+      },
+      {
+        "value": "10:41pm",
+        "label": "TIME"
+      },
+      {
+        "value": "Excellency",
+        "label": "TITLE"
+      },
+      {
+        "value": "Anaira",
+        "label": "GIVENNAME"
+      },
+      {
+        "value": "Unknown",
+        "label": "LASTNAME"
+      },
+      {
+        "value": "25th June 1997",
+        "label": "BOD"
+      },
+      {
+        "value": "392.694.2356",
+        "label": "SOCIALNUMBER"
+      },
+      {
+        "value": "IL40597IU",
+        "label": "IDCARD"
+      },
+      {
+        "value": "+12 41728.9259",
+        "label": "TEL"
+      },
+      {
+        "value": "233.238.137.5",
+        "label": "IP"
+      },
+      {
+        "value": "09:32:03",
+        "label": "TIME"
+      }
+    ]
+  },
+  {
+    "id": "45752",
+    "text": "**Medication Authorization Form**\n\nI, **Queen Velichka Nikteridis Kwasny Kluwe**, hereby authorize the administration of medication to me, by healthcare professionals using the following information:\n\n- **Feminine**\n- **Vel Nik 09 E 28 5 TTH**\n- **2116182190**\n- **+9-196 395.6326**\n- **VNKK46**\n\nThis consent is valid as of **7th September 2005**, and authorizes medication administration at **12:15**, located at **[52.3, 1.599]**.",
+    "entities": [
+      {
+        "value": "Queen",
+        "label": "TITLE"
+      },
+      {
+        "value": "Velichka",
+        "label": "GIVENNAME"
+      },
+      {
+        "value": "Nikteridis",
+        "label": "LASTNAME"
+      },
+      {
+        "value": "Kwasny",
+        "label": "LASTNAME"
+      },
+      {
+        "value": "Kluwe",
+        "label": "LASTNAME"
+      },
+      {
+        "value": "Feminine",
+        "label": "SEX"
+      },
+      {
+        "value": "Vel Nik 09 E 28 5 TTH",
+        "label": "SOCIALNUMBER"
+      },
+      {
+        "value": "2116182190",
+        "label": "DRIVERLICENSE"
+      },
+      {
+        "value": "+9-196 395.6326",
+        "label": "TEL"
+      },
+      {
+        "value": "VNKK46",
+        "label": "USERNAME"
+      },
+      {
+        "value": "7th September 2005",
+        "label": "DATE"
+      },
+      {
+        "value": "12:15",
+        "label": "TIME"
+      },
+      {
+        "value": "[52.3, 1.599]",
+        "label": "GEOCOORD"
+      }
+    ]
+  }
+]

@@ -1,0 +1,671 @@
+{
+  "meta": {
+    "run": "glm-5p3-flash-L3",
+    "backend": "accounts/fireworks/models/glm-5p3-flash",
+    "gliner": "off",
+    "system": "harness",
+    "config": {
+      "model": "glm-5p3-flash",
+      "prompt": "guide",
+      "shots": 3,
+      "ground": false,
+      "regex": false,
+      "passes": 1,
+      "llm": true,
+      "reasoning_effort": null,
+      "max_tokens": 8192
+    },
+    "limit": null,
+    "test_sha256": "8b8a0849d8ebcd15fa640b7d678154d9f3f6c2494a465c6889e0d7872dd53e33"
+  },
+  "rows_scored": 500,
+  "rows_errored": 0,
+  "entities": 3309,
+  "recall_strict": 0.9839830764581444,
+  "recall_exact": 0.9845874886672711,
+  "precision": 0.9316312056737589,
+  "replaced_tokens": 3525,
+  "false_positive_tokens": 241,
+  "clean_rows": 0.916,
+  "zero_pii_rows": 51,
+  "zero_pii_rows_touched": 3,
+  "per_label": {
+    "BOD": {
+      "n": 157,
+      "recall_strict": 0.9936305732484076,
+      "recall_exact": 0.9936305732484076,
+      "low_n": false
+    },
+    "BUILDING": {
+      "n": 153,
+      "recall_strict": 0.9869281045751634,
+      "recall_exact": 0.9869281045751634,
+      "low_n": false
+    },
+    "CARDISSUER": {
+      "n": 1,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "CITY": {
+      "n": 152,
+      "recall_strict": 0.993421052631579,
+      "recall_exact": 0.993421052631579,
+      "low_n": false
+    },
+    "COUNTRY": {
+      "n": 107,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "DATE": {
+      "n": 104,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "DRIVERLICENSE": {
+      "n": 147,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "EMAIL": {
+      "n": 171,
+      "recall_strict": 0.9941520467836257,
+      "recall_exact": 0.9941520467836257,
+      "low_n": false
+    },
+    "GEOCOORD": {
+      "n": 19,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "GIVENNAME": {
+      "n": 165,
+      "recall_strict": 0.9939393939393939,
+      "recall_exact": 0.9939393939393939,
+      "low_n": false
+    },
+    "IDCARD": {
+      "n": 155,
+      "recall_strict": 0.9483870967741935,
+      "recall_exact": 0.9483870967741935,
+      "low_n": false
+    },
+    "IP": {
+      "n": 151,
+      "recall_strict": 0.9933774834437086,
+      "recall_exact": 0.9933774834437086,
+      "low_n": false
+    },
+    "LASTNAME": {
+      "n": 181,
+      "recall_strict": 0.994475138121547,
+      "recall_exact": 0.994475138121547,
+      "low_n": false
+    },
+    "PASS": {
+      "n": 110,
+      "recall_strict": 0.9545454545454546,
+      "recall_exact": 0.9545454545454546,
+      "low_n": false
+    },
+    "PASSPORT": {
+      "n": 138,
+      "recall_strict": 0.9927536231884058,
+      "recall_exact": 0.9927536231884058,
+      "low_n": false
+    },
+    "POSTCODE": {
+      "n": 144,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "SECADDRESS": {
+      "n": 58,
+      "recall_strict": 0.9827586206896551,
+      "recall_exact": 0.9827586206896551,
+      "low_n": false
+    },
+    "SEX": {
+      "n": 100,
+      "recall_strict": 0.92,
+      "recall_exact": 0.92,
+      "low_n": false
+    },
+    "SOCIALNUMBER": {
+      "n": 140,
+      "recall_strict": 0.9928571428571429,
+      "recall_exact": 0.9928571428571429,
+      "low_n": false
+    },
+    "STATE": {
+      "n": 127,
+      "recall_strict": 0.9921259842519685,
+      "recall_exact": 0.9921259842519685,
+      "low_n": false
+    },
+    "STREET": {
+      "n": 148,
+      "recall_strict": 0.9864864864864865,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "TEL": {
+      "n": 122,
+      "recall_strict": 0.9836065573770492,
+      "recall_exact": 0.9836065573770492,
+      "low_n": false
+    },
+    "TIME": {
+      "n": 263,
+      "recall_strict": 0.973384030418251,
+      "recall_exact": 0.973384030418251,
+      "low_n": false
+    },
+    "TITLE": {
+      "n": 106,
+      "recall_strict": 0.9433962264150944,
+      "recall_exact": 0.9433962264150944,
+      "low_n": false
+    },
+    "USERNAME": {
+      "n": 190,
+      "recall_strict": 0.9842105263157894,
+      "recall_exact": 0.9842105263157894,
+      "low_n": false
+    }
+  },
+  "labeled": {
+    "micro": {
+      "precision": 0.8499290780141844,
+      "recall": 0.9054094892716833,
+      "f1": 0.8767925080479954,
+      "tp": 2996,
+      "fp": 529,
+      "fn": 313
+    },
+    "span": {
+      "precision": 0.9148936170212766,
+      "recall": 0.9746146872166818,
+      "f1": 0.9438103599648814,
+      "tp": 3225,
+      "fp": 300,
+      "fn": 84
+    },
+    "per_label": {
+      "BOD": {
+        "precision": 0.89375,
+        "recall": 0.910828025477707,
+        "f1": 0.9022082018927445,
+        "tp": 143,
+        "fp": 17,
+        "fn": 14
+      },
+      "BUILDING": {
+        "precision": 0.961038961038961,
+        "recall": 0.9673202614379085,
+        "f1": 0.9641693811074918,
+        "tp": 148,
+        "fp": 6,
+        "fn": 5
+      },
+      "CARDISSUER": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "CITY": {
+        "precision": 0.8802395209580839,
+        "recall": 0.9671052631578947,
+        "f1": 0.9216300940438872,
+        "tp": 147,
+        "fp": 20,
+        "fn": 5
+      },
+      "COUNTRY": {
+        "precision": 0.816793893129771,
+        "recall": 1.0,
+        "f1": 0.8991596638655461,
+        "tp": 107,
+        "fp": 24,
+        "fn": 0
+      },
+      "DATE": {
+        "precision": 0.7886178861788617,
+        "recall": 0.9326923076923077,
+        "f1": 0.854625550660793,
+        "tp": 97,
+        "fp": 26,
+        "fn": 7
+      },
+      "DRIVERLICENSE": {
+        "precision": 0.8431372549019608,
+        "recall": 0.5850340136054422,
+        "f1": 0.6907630522088354,
+        "tp": 86,
+        "fp": 16,
+        "fn": 61
+      },
+      "EMAIL": {
+        "precision": 0.9659090909090909,
+        "recall": 0.9941520467836257,
+        "f1": 0.9798270893371758,
+        "tp": 170,
+        "fp": 6,
+        "fn": 1
+      },
+      "GEOCOORD": {
+        "precision": 0.95,
+        "recall": 1.0,
+        "f1": 0.9743589743589743,
+        "tp": 19,
+        "fp": 1,
+        "fn": 0
+      },
+      "GIVENNAME": {
+        "precision": 0.7537688442211056,
+        "recall": 0.9090909090909091,
+        "f1": 0.8241758241758242,
+        "tp": 150,
+        "fp": 49,
+        "fn": 15
+      },
+      "IDCARD": {
+        "precision": 0.711764705882353,
+        "recall": 0.7806451612903226,
+        "f1": 0.7446153846153847,
+        "tp": 121,
+        "fp": 49,
+        "fn": 34
+      },
+      "IP": {
+        "precision": 0.8975903614457831,
+        "recall": 0.9867549668874173,
+        "f1": 0.9400630914826498,
+        "tp": 149,
+        "fp": 17,
+        "fn": 2
+      },
+      "LASTNAME": {
+        "precision": 0.8,
+        "recall": 0.9060773480662984,
+        "f1": 0.8497409326424871,
+        "tp": 164,
+        "fp": 41,
+        "fn": 17
+      },
+      "PASS": {
+        "precision": 0.7678571428571429,
+        "recall": 0.7818181818181819,
+        "f1": 0.7747747747747747,
+        "tp": 86,
+        "fp": 26,
+        "fn": 24
+      },
+      "PASSPORT": {
+        "precision": 0.7964601769911505,
+        "recall": 0.6521739130434783,
+        "f1": 0.7171314741035856,
+        "tp": 90,
+        "fp": 23,
+        "fn": 48
+      },
+      "POSTCODE": {
+        "precision": 0.8679245283018868,
+        "recall": 0.9583333333333334,
+        "f1": 0.910891089108911,
+        "tp": 138,
+        "fp": 21,
+        "fn": 6
+      },
+      "SECADDRESS": {
+        "precision": 0.9661016949152542,
+        "recall": 0.9827586206896551,
+        "f1": 0.9743589743589743,
+        "tp": 57,
+        "fp": 2,
+        "fn": 1
+      },
+      "SEX": {
+        "precision": 0.9680851063829787,
+        "recall": 0.91,
+        "f1": 0.9381443298969071,
+        "tp": 91,
+        "fp": 3,
+        "fn": 9
+      },
+      "SOCIALNUMBER": {
+        "precision": 0.6282722513089005,
+        "recall": 0.8571428571428571,
+        "f1": 0.7250755287009064,
+        "tp": 120,
+        "fp": 71,
+        "fn": 20
+      },
+      "STATE": {
+        "precision": 0.9692307692307692,
+        "recall": 0.9921259842519685,
+        "f1": 0.980544747081712,
+        "tp": 126,
+        "fp": 4,
+        "fn": 1
+      },
+      "STREET": {
+        "precision": 0.9074074074074074,
+        "recall": 0.9932432432432432,
+        "f1": 0.9483870967741935,
+        "tp": 147,
+        "fp": 15,
+        "fn": 1
+      },
+      "TEL": {
+        "precision": 0.8623188405797102,
+        "recall": 0.9754098360655737,
+        "f1": 0.9153846153846154,
+        "tp": 119,
+        "fp": 19,
+        "fn": 3
+      },
+      "TIME": {
+        "precision": 0.9194139194139194,
+        "recall": 0.9543726235741445,
+        "f1": 0.9365671641791045,
+        "tp": 251,
+        "fp": 22,
+        "fn": 12
+      },
+      "TITLE": {
+        "precision": 0.9680851063829787,
+        "recall": 0.8584905660377359,
+        "f1": 0.91,
+        "tp": 91,
+        "fp": 3,
+        "fn": 15
+      },
+      "USERNAME": {
+        "precision": 0.7876106194690266,
+        "recall": 0.9368421052631579,
+        "f1": 0.8557692307692308,
+        "tp": 178,
+        "fp": 48,
+        "fn": 12
+      }
+    }
+  },
+  "leaks": [
+    {
+      "id": "46379A",
+      "label": "USERNAME",
+      "value": "TT"
+    },
+    {
+      "id": "49274B",
+      "label": "USERNAME",
+      "value": "Unnamed"
+    },
+    {
+      "id": "40898",
+      "label": "TITLE",
+      "value": "Corp"
+    },
+    {
+      "id": "40779B",
+      "label": "SEX",
+      "value": "O"
+    },
+    {
+      "id": "40779B",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "49028B",
+      "label": "TIME",
+      "value": "5"
+    },
+    {
+      "id": "52920B",
+      "label": "PASS",
+      "value": "aPqg\\\"4f\\\"?"
+    },
+    {
+      "id": "42148C",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "50213A",
+      "label": "IDCARD",
+      "value": "396755759"
+    },
+    {
+      "id": "50801A",
+      "label": "BUILDING",
+      "value": "20"
+    },
+    {
+      "id": "43214C",
+      "label": "SECADDRESS",
+      "value": "N/A"
+    },
+    {
+      "id": "42448D",
+      "label": "SEX",
+      "value": "Other"
+    },
+    {
+      "id": "49682J",
+      "label": "TITLE",
+      "value": "Pr"
+    },
+    {
+      "id": "47799A",
+      "label": "TITLE",
+      "value": "H"
+    },
+    {
+      "id": "53163G",
+      "label": "IDCARD",
+      "value": "859600243443"
+    },
+    {
+      "id": "53163G",
+      "label": "IDCARD",
+      "value": "2291796083"
+    },
+    {
+      "id": "49535B",
+      "label": "BUILDING",
+      "value": "181"
+    },
+    {
+      "id": "49533D",
+      "label": "IDCARD",
+      "value": "75286444904"
+    },
+    {
+      "id": "49533D",
+      "label": "IDCARD",
+      "value": "4782072446405"
+    },
+    {
+      "id": "47187",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "45434A",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "47586B",
+      "label": "TIME",
+      "value": "8"
+    },
+    {
+      "id": "43544B",
+      "label": "TITLE",
+      "value": "H"
+    },
+    {
+      "id": "43544B",
+      "label": "TITLE",
+      "value": "Manager"
+    },
+    {
+      "id": "52821",
+      "label": "TIME",
+      "value": "13"
+    },
+    {
+      "id": "49226C",
+      "label": "STREET",
+      "value": "Dundee Street"
+    },
+    {
+      "id": "49226C",
+      "label": "PASS",
+      "value": "A_1g\\\\2"
+    },
+    {
+      "id": "51343B",
+      "label": "IP",
+      "value": "fe53:175f:ca3a:74f3:4213:fa45:bebc:7524"
+    },
+    {
+      "id": "47025K",
+      "label": "SOCIALNUMBER",
+      "value": "null"
+    },
+    {
+      "id": "47025K",
+      "label": "TEL",
+      "value": "null"
+    },
+    {
+      "id": "43857B",
+      "label": "BOD",
+      "value": "Chakra balancing"
+    },
+    {
+      "id": "43857B",
+      "label": "CITY",
+      "value": "Acupuncture"
+    },
+    {
+      "id": "52795B",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "45643",
+      "label": "TIME",
+      "value": "14"
+    },
+    {
+      "id": "47163A",
+      "label": "IDCARD",
+      "value": "ECO2023001"
+    },
+    {
+      "id": "47163B",
+      "label": "STATE",
+      "value": "AZ"
+    },
+    {
+      "id": "53425E",
+      "label": "IDCARD",
+      "value": "429021087"
+    },
+    {
+      "id": "52740D",
+      "label": "SEX",
+      "value": "Other"
+    },
+    {
+      "id": "51121B",
+      "label": "EMAIL",
+      "value": "support@votingrights.com"
+    },
+    {
+      "id": "49682F",
+      "label": "TITLE",
+      "value": "Mrs"
+    },
+    {
+      "id": "45096D",
+      "label": "PASSPORT",
+      "value": "027958509"
+    },
+    {
+      "id": "48559A",
+      "label": "USERNAME",
+      "value": "101"
+    },
+    {
+      "id": "41355A",
+      "label": "TIME",
+      "value": "3"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "IifG%O\\\"6"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "|\\\\#I9wvq"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "8\\\"FaYm"
+    },
+    {
+      "id": "40834B",
+      "label": "TEL",
+      "value": "N/A"
+    },
+    {
+      "id": "40834B",
+      "label": "GIVENNAME",
+      "value": "N/A"
+    },
+    {
+      "id": "40834B",
+      "label": "LASTNAME",
+      "value": "N/A"
+    },
+    {
+      "id": "53163E",
+      "label": "IDCARD",
+      "value": "31710527083928"
+    },
+    {
+      "id": "43395B",
+      "label": "TIME",
+      "value": "16"
+    },
+    {
+      "id": "48780C",
+      "label": "STREET",
+      "value": "State Highway 160"
+    },
+    {
+      "id": "44567A",
+      "label": "TIME",
+      "value": "3"
+    }
+  ]
+}
