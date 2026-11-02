@@ -93,18 +93,24 @@ an AI agent.
 
 ## Evaluating models
 
-`scripts/eval_models.py` measures how well different Fireworks models find PII,
+`scripts/eval_models.py` measures how well different models find PII,
 using the frozen 500-row English test set in `data/` (built from
-ai4privacy/pii-masking-300k; see `scripts/build_test_set.py`).
+ai4privacy/pii-masking-300k; see `scripts/build_test_set.py`). Three
+providers: Fireworks (`FIREWORKS_API_KEY`), OpenAI (`OPENAI_API_KEY`) and
+Anthropic (`ANTHROPIC_API_KEY`).
 
 ```bash
-export FIREWORKS_API_KEY="fw_..."
-python3 scripts/eval_models.py --list-models        # what your key can call
+export FIREWORKS_API_KEY="fw_..."   # and/or OPENAI_API_KEY, ANTHROPIC_API_KEY
+python3 scripts/eval_models.py --list-models        # what your keys can call
 python3 scripts/eval_models.py --limit 20           # smoke run
 python3 scripts/eval_models.py --by-label           # full run, per-label detail
-python3 scripts/eval_models.py --models "accounts/fireworks/models/a,accounts/fireworks/models/b" \
-    --concurrency 16                                # your picks, more parallel
+python3 scripts/eval_models.py --concurrency 16 \
+    --models "accounts/fireworks/models/glm-5p3-flash,openai:gpt-5-mini,anthropic:claude-haiku-4-5"
 ```
+
+Model ids route by name (`gpt-*`/`o1`/`o3`/`o4` → OpenAI, `claude-*` →
+Anthropic, anything else → Fireworks); an explicit `openai:` /
+`anthropic:` / `fireworks:` prefix overrides that.
 
 Two scores per model: **strict** (value and label must both match gold) and
 **value-only** (the PII was found, label ignored — what matters for

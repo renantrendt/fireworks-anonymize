@@ -10,14 +10,17 @@ Two scores per model:
              matters for anonymization: the PII was found, even if mislabeled.
 
 Usage:
-  export FIREWORKS_API_KEY=fw_...
+  export FIREWORKS_API_KEY=fw_...     # and/or OPENAI_API_KEY, ANTHROPIC_API_KEY
+  python scripts/eval_models.py --list-models
   python scripts/eval_models.py --models \
-      accounts/fireworks/models/qwen3-235b-a22b,\
-      accounts/fireworks/models/llama-v3p3-70b-instruct
+      accounts/fireworks/models/glm-5p3-flash,openai:gpt-5-mini,\
+anthropic:claude-haiku-4-5
   python scripts/eval_models.py --limit 20          # quick smoke run
   python scripts/eval_models.py --concurrency 16   # more rows in flight
 
-Rows are sent to a model in parallel (--concurrency, default 8).
+Model ids without a prefix route by name: gpt-*/o1/o3/o4 -> OpenAI,
+claude-* -> Anthropic, everything else -> Fireworks. Rows are sent to a
+model in parallel (--concurrency, default 8).
 
 Results are written to results/eval-<timestamp>.json; raw predictions to
 results/preds-<model>-<timestamp>.jsonl (one line per row, written as the
@@ -48,12 +51,39 @@ RESULTS_DIR = ROOT / "results"
 
 FIREWORKS_API_KEY = os.environ.get("FIREWORKS_API_KEY") or ""
 FIREWORKS_URL = os.environ.get("FIREWORKS_URL") or "https://api.fireworks.ai/inference/v1/chat/completions"
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") or ""
+OPENAI_URL = os.environ.get("OPENAI_URL") or "https://api.openai.com/v1/chat/completions"
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY") or ""
+ANTHROPIC_URL = os.environ.get("ANTHROPIC_URL") or "https://api.anthropic.com/v1/messages"
+ANTHROPIC_VERSION = "2023-06-01"
+
+PROVIDER_KEYS = {
+    "fireworks": lambda: FIREWORKS_API_KEY,
+    "openai": lambda: OPENAI_API_KEY,
+    "anthropic": lambda: ANTHROPIC_API_KEY,
+}
 
 DEFAULT_MODELS = [
     "accounts/fireworks/models/qwen3p8-max",
     "accounts/fireworks/models/gpt-oss-120b",
     "accounts/fireworks/models/glm-5p3-flash",
 ]
+
+
+def provider_for(model: str) -> tuple[str, str]:
+    """(provider, bare model id). An explicit prefix wins
+    ("openai:gpt-5-mini", "anthropic:claude-...", "fireworks:...");
+    otherwise the name decides: gpt-*/o1/o3/o4/chatgpt -> openai,
+    claude-* -> anthropic, everything else -> fireworks."""
+    for prefix in ("openai:", "anthropic:", "fireworks:"):
+        if model.startswith(prefix):
+            return prefix[:-1], model[len(prefix):]
+    low = model.lower()
+    if re.match(r"(gpt-|o[134]|chatgpt-)", low):
+        return "openai", model
+    if low.startswith("claude"):
+        return "anthropic", model
+    return "fireworks", model
 
 
 def load_labels() -> list[str]:
@@ -97,34 +127,76 @@ def build_prompt(text: str, labels: list[str]) -> str:
     )
 
 
-def call_fireworks(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
-    body = json.dumps({
-        "model": model,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0,
-        "max_tokens": max_tokens,
-    }).encode("utf-8")
+def _post_json(url: str, headers: dict, payload: dict, timeout: int,
+               provider: str) -> dict:
     req = urllib.request.Request(
-        FIREWORKS_URL,
-        data=body,
-        headers={"Content-Type": "application/json",
-                 "Authorization": "Bearer " + FIREWORKS_API_KEY},
+        url, data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json", **headers},
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
+            return json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         detail = exc.read().decode("utf-8", "replace")[:300]
-        raise RuntimeError(f"HTTP {exc.code} from Fireworks: {detail}") from None
-    return (payload.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+        raise RuntimeError(f"HTTP {exc.code} from {provider}: {detail}") from None
 
 
-def available_models(timeout: int = 60) -> list[str]:
-    """Every model id this API key may call."""
-    req = urllib.request.Request(
-        FIREWORKS_URL.rsplit("/chat/completions", 1)[0] + "/models",
-        headers={"Authorization": "Bearer " + FIREWORKS_API_KEY},
-    )
+def call_fireworks(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
+    payload = {"model": model,
+               "messages": [{"role": "user", "content": prompt}],
+               "temperature": 0, "max_tokens": max_tokens}
+    data = _post_json(FIREWORKS_URL, {"Authorization": "Bearer " + FIREWORKS_API_KEY},
+                      payload, timeout, "Fireworks")
+    return (data.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+
+
+def call_openai(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
+    payload = {"model": model,
+               "messages": [{"role": "user", "content": prompt}],
+               "max_completion_tokens": max_tokens}
+    if not re.match(r"(gpt-5|o[134])", model.lower()):
+        payload["temperature"] = 0  # gpt-5/o-series reject temperature
+    data = _post_json(OPENAI_URL, {"Authorization": "Bearer " + OPENAI_API_KEY},
+                      payload, timeout, "OpenAI")
+    return (data.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+
+
+def call_anthropic(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
+    payload = {"model": model, "max_tokens": max_tokens, "temperature": 0,
+               "messages": [{"role": "user", "content": prompt}]}
+    data = _post_json(ANTHROPIC_URL,
+                      {"x-api-key": ANTHROPIC_API_KEY,
+                       "anthropic-version": ANTHROPIC_VERSION},
+                      payload, timeout, "Anthropic")
+    parts = [b.get("text", "") for b in data.get("content", [])
+             if isinstance(b, dict) and b.get("type") == "text"]
+    return "".join(parts)
+
+
+def call_model(model: str, prompt: str, max_tokens: int, timeout: int) -> str:
+    provider, bare = provider_for(model)
+    if not PROVIDER_KEYS[provider]():
+        raise RuntimeError(f"no API key for {provider}: set "
+                           f"{provider.upper()}_API_KEY")
+    return {"fireworks": call_fireworks, "openai": call_openai,
+            "anthropic": call_anthropic}[provider](bare, prompt, max_tokens, timeout)
+
+
+def available_models(provider: str, timeout: int = 60) -> list[str]:
+    """Every model id this provider's API key may call."""
+    key = PROVIDER_KEYS[provider]()
+    if not key:
+        return []
+    if provider == "fireworks":
+        url = FIREWORKS_URL.rsplit("/chat/completions", 1)[0] + "/models"
+        headers = {"Authorization": "Bearer " + key}
+    elif provider == "openai":
+        url = OPENAI_URL.rsplit("/chat/completions", 1)[0] + "/models"
+        headers = {"Authorization": "Bearer " + key}
+    else:
+        url = ANTHROPIC_URL.rsplit("/messages", 1)[0] + "/models"
+        headers = {"x-api-key": key, "anthropic-version": ANTHROPIC_VERSION}
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         payload = json.loads(resp.read().decode("utf-8"))
     return sorted(m.get("id", "") for m in payload.get("data", []) if m.get("id"))
@@ -207,7 +279,7 @@ def extract_one(model: str, row: dict, labels: list[str],
     """One row through one model. Returns (raw answer, parsed entities, failed)."""
     prompt = build_prompt(row["source_text"], labels)
     try:
-        raw = call_fireworks(model, prompt, max_tokens, timeout)
+        raw = call_model(model, prompt, max_tokens, timeout)
         return raw, parse_model_json(raw, set(labels), row["source_text"]), False
     except Exception as exc:
         return f"ERROR: {exc}", [], True
@@ -246,7 +318,9 @@ def eval_model(model: str, rows: list[dict], labels: list[str],
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--models", default=",".join(DEFAULT_MODELS),
-                    help="comma-separated Fireworks model ids")
+                    help="comma-separated model ids; prefix with openai: or "
+                         "anthropic: for those providers (gpt-*/claude-* names "
+                         "route automatically)")
     ap.add_argument("--limit", type=int, default=0, help="only the first N rows")
     ap.add_argument("--max-tokens", type=int, default=4096)
     ap.add_argument("--timeout", type=int, default=300)
@@ -255,26 +329,50 @@ def main() -> int:
     ap.add_argument("--by-label", action="store_true",
                     help="also print the per-label strict F1 table")
     ap.add_argument("--list-models", action="store_true",
-                    help="print the model ids this API key may call, then exit")
+                    help="print the model ids your API keys may call, then exit")
     args = ap.parse_args()
 
-    if not FIREWORKS_API_KEY:
-        print("ERROR: set FIREWORKS_API_KEY first.", file=sys.stderr)
+    if not any(key() for key in PROVIDER_KEYS.values()):
+        print("ERROR: set FIREWORKS_API_KEY, OPENAI_API_KEY or "
+              "ANTHROPIC_API_KEY first.", file=sys.stderr)
         return 1
 
     if args.list_models:
-        for mid in available_models():
-            print(mid)
+        listed = False
+        for provider in PROVIDER_KEYS:
+            if not PROVIDER_KEYS[provider]():
+                continue
+            listed = True
+            print(f"# {provider}")
+            for mid in available_models(provider):
+                print(mid)
+        if not listed:
+            print("ERROR: set FIREWORKS_API_KEY, OPENAI_API_KEY or "
+                  "ANTHROPIC_API_KEY first.", file=sys.stderr)
+            return 1
         return 0
 
     models = [m.strip() for m in args.models.split(",") if m.strip()]
-    valid = set(available_models())
-    bad = [m for m in models if m not in valid]
+    by_provider: dict[str, list[str]] = defaultdict(list)
+    for m in models:
+        provider, bare = provider_for(m)
+        by_provider[provider].append(bare)
+    bad = []
+    for provider, ids in by_provider.items():
+        if not PROVIDER_KEYS[provider]():
+            bad += ids
+            print(f"ERROR: no API key for {provider} "
+                  f"(set {provider.upper()}_API_KEY); needed by: {', '.join(ids)}",
+                  file=sys.stderr)
+            continue
+        valid = set(available_models(provider))
+        bad += [m for m in ids if m not in valid]
+        for m in ids:
+            if m not in valid:
+                print(f"ERROR: {provider} has no model '{m}'", file=sys.stderr)
     if bad:
-        print("ERROR: these model ids are not available to your API key:", file=sys.stderr)
-        for m in bad:
-            print(f"  {m}", file=sys.stderr)
-        print("Run with --list-models to see what you can call.", file=sys.stderr)
+        print("Run with --list-models to see what your keys can call.",
+              file=sys.stderr)
         return 1
 
     warning = check_frozen_hash()

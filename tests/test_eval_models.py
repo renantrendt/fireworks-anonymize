@@ -59,3 +59,17 @@ def test_score_zero_pii_row_perfect_when_model_returns_empty():
     r = ev.score_model([[]], [[]], failed=0)
     assert r["strict"]["f1"] == 0.0  # no tp: scores are 0, but no fp/fn either
     assert r["rows"] == 1
+
+
+def test_provider_routing_by_prefix():
+    assert ev.provider_for("openai:anything") == ("openai", "anything")
+    assert ev.provider_for("anthropic:anything") == ("anthropic", "anything")
+    assert ev.provider_for("fireworks:anything") == ("fireworks", "anything")
+
+
+def test_provider_routing_by_name():
+    assert ev.provider_for("gpt-5-mini") == ("openai", "gpt-5-mini")
+    assert ev.provider_for("o3-pro") == ("openai", "o3-pro")
+    assert ev.provider_for("claude-haiku-4-5") == ("anthropic", "claude-haiku-4-5")
+    assert ev.provider_for("accounts/fireworks/models/glm-5p3-flash") == \
+        ("fireworks", "accounts/fireworks/models/glm-5p3-flash")
