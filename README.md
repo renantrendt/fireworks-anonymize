@@ -153,6 +153,30 @@ Read these before you rely on a copy.
 - **The local path needs a large Mac** for the default model, plus Ollama,
   Tesseract and the GLiNER download.
 
+## Fireworks Buildathon results (Nov 2, 2026)
+
+Task: list every personal value in a short English text (ai4privacy/pii-masking-300k). 500 frozen test rows from the validation split; 1,000 training rows from the train split. One fixed prompt (`scripts/pii_prompt.py`).
+
+| System | Rows fully correct | Values missed | Precision | p50 time |
+|---|---|---|---|---|
+| GLM 5.3 Flash, stock | 52.8% | 10.8% | 0.886 | not measured |
+| + 8 examples in prompt | 57.8% | 8.1% | 0.908 | 4.0 s |
+| Kimi K3 (teacher), stock | 56.2% | 13.7% | 0.904 | 7.9 s |
+| LoRA student (rank 8, 3 epochs, 17 min) | **79.0%** | **2.5%** | **0.961** | **0.9 s** |
+
+Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001. The student also beats its teacher, Kimi K3.
+A 20-row smoke check ran on test rows before the full runs; no prompt changed afterwards.
+
+Reproduce:
+
+```bash
+python3 scripts/build_train_set.py            # data/train_gold.jsonl
+python3 scripts/score_fireworks.py <model> runs/<name>.jsonl [--fewshot 8]
+python3 scripts/compare_runs.py runs/<before>.jsonl runs/<after>.jsonl
+```
+
+`scripts/build_teacher_set.py` builds `data/train_teacher.jsonl`: Kimi K3's answers kept only when they match the labels (567 of 1,000). Not trained yet.
+
 ## More detail
 
 - `SKILL.md`: the full operating notes, written for an AI coding agent that
