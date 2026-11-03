@@ -1,0 +1,1 @@
+{"model": "accounts/fireworks/models/kimi-k3", "rows": 500, "row_pass": 0.562, "recall": 0.863, "precision": 0.904, "f1": 0.883, "unparsed": 18, "p50_s": 7.86, "p95_s": 50.34}

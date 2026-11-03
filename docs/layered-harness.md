@@ -89,7 +89,7 @@ Each layer keeps everything from the layer before it and adds one change.
 
 What each step did:
 
-- **Rules alone (L0)** find 9.7% of PII values. What they find is right 98.2% of the time, but names, addresses, dates and ID numbers have no fixed format.
+- **Rules alone (L0)** find 9.8% of PII values. What they find is right 98.2% of the time, but names, addresses, dates and ID numbers have no fixed format.
 - **Plain prompt (L1)** already removes almost all PII. Its errors are mostly a wrong label or a slightly wrong boundary, concentrated in ID numbers, dates and first names. It also redacted something in 9 of the 51 texts with no PII.
 - **Label guide (L2, +2.0):** one line per label saying what it means in this dataset, for example BOD is a birth date and BUILDING is only the house number. Precision rose from 81.7% to 84.1%, while leak recall dipped to 97.9%: the gain came from better labels, not from finding more.
 - **Worked examples (L3, +1.2):** three examples from the train split show how names and addresses split into parts. Answers also got shorter (414 output tokens instead of 786), so each text took 2.8 seconds instead of 5.5.
@@ -127,7 +127,7 @@ Not on this task. With the L4 setup, `qwen3p8-max` (a larger reasoning model) sc
 
 ## Reproduce
 
-Requires Python 3.8+ and a Fireworks API key.
+Requires Python 3.9 or later and a Fireworks API key.
 
 ```bash
 pip install -r scripts/requirements.txt
@@ -177,7 +177,7 @@ Each layer is one or two API calls per text, with 8 requests in parallel; the wh
 - **Numbered labels are merged.** LASTNAME1/2/3 become LASTNAME and GIVENNAME1/2 become GIVENNAME, because the numbering is an artifact of how the data was generated.
 - **One test set, one run per layer.** Temperature 0 makes runs repeatable, but we did not test other seeds or other samples of the data.
 - **Cost is reported in tokens, not dollars.** `results.md` has input and output tokens per text for each layer.
-- **Fine-tuning and a frontier comparison are next.** A LoRA fine-tune of `glm-5p3-flash` on the train split (L7) is planned to target the ID-number labels.
+- **Fine-tuning and a frontier comparison are next.** A LoRA fine-tune of `glm-5p3-flash` on the train split (L7) was then run: through this same harness and scorer it reaches 92.7% typed F1 with the plain prompt (`data/runs/lora-L1/`, `data/runs/lora-L5/`; see SUBMISSION.md, Step 5).
 
 ## The rest of this repository
 

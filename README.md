@@ -1,5 +1,7 @@
 # PII redaction with open models
 
+**Fireworks Buildathon write-up (full story, rubric, limitations): [SUBMISSION.md](SUBMISSION.md).**
+
 Find personal data (PII) in short English texts, label it, and mask it before the text goes to an LLM, using open models on Fireworks instead of a frontier API. Everything is measured on a frozen 500-row English test set built from the validation split of [ai4privacy/pii-masking-300k](https://huggingface.co/datasets/ai4privacy/pii-masking-300k) (`data/test_set.jsonl`, locked by `data/test_set.sha256`; see `scripts/build_test_set.py`).
 
 Two lines of work, both on GLM 5.3 Flash:
@@ -11,14 +13,14 @@ Two lines of work, both on GLM 5.3 Flash:
 
 Task: list every personal value in a short English text (ai4privacy/pii-masking-300k). 500 frozen test rows from the validation split; 1,000 training rows from the train split. One fixed prompt (`scripts/pii_prompt.py`).
 
-| System | Rows fully correct | Values missed | Precision | p50 time |
+| System | Rows fully correct (values only, labels ignored) | Values missed | Precision | p50 time |
 |---|---|---|---|---|
 | GLM 5.3 Flash, stock | 52.8% | 10.8% | 0.886 | not measured |
 | + 8 examples in prompt | 57.8% | 8.1% | 0.908 | 4.0 s |
-| Kimi K3 (teacher), stock | 56.2% | 13.7% | 0.904 | 7.9 s |
-| LoRA student (rank 8, 3 epochs, 17 min) | **79.0%** | **2.5%** | **0.961** | **0.9 s** |
+| Kimi K3, stock (larger model) | 56.2% | 13.7% | 0.904 | 7.9 s |
+| LoRA student (rank 8, 3 epochs; `runs/finetune-job.json`) | **79.0%** | **2.5%** | **0.961** | **0.9 s** |
 
-Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001. The student also beats its teacher, Kimi K3.
+Student vs stock: +26 points (bootstrap 95% range +21 to +31), McNemar p < 0.0001. The student also beats Kimi K3, a much larger stock model. (The student was trained on the dataset's labels, not on Kimi's answers.)
 A 20-row smoke check ran on test rows before the full runs; no prompt changed afterwards.
 
 Reproduce:

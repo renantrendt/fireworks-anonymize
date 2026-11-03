@@ -1,0 +1,27 @@
+{
+ "name": "accounts/renan-ym76yzx07ofs/supervisedFineTuningJobs/qnz73k10",
+ "displayName": "pii-gold-glm53",
+ "baseModel": "accounts/fireworks/models/glm-5p3-flash",
+ "dataset": "accounts/renan-ym76yzx07ofs/datasets/anoymize-hackaton",
+ "outputModel": "accounts/renan-ym76yzx07ofs/models/pii-gold-glm53",
+ "loraRank": 8,
+ "epochs": 3,
+ "learningRate": 0,
+ "state": "JOB_STATE_COMPLETED",
+ "createTime": "2026-11-02T23:10:16.324410Z",
+ "completedTime": "2026-11-02T23:27:16.461706Z",
+ "stateTimestamps": [
+  {
+   "state": "JOB_STATE_PENDING",
+   "transitionTime": "2026-11-02T23:10:16.169718135Z"
+  },
+  {
+   "state": "JOB_STATE_RUNNING",
+   "transitionTime": "2026-11-02T23:10:16.357563232Z"
+  },
+  {
+   "state": "JOB_STATE_COMPLETED",
+   "transitionTime": "2026-11-02T23:27:16.461712585Z"
+  }
+ ]
+}

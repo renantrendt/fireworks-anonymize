@@ -1,0 +1,726 @@
+{
+  "meta": {
+    "run": "lora-L1",
+    "backend": "accounts/renan-ym76yzx07ofs/models/pii-gold-glm53",
+    "gliner": "off",
+    "system": "harness",
+    "config": {
+      "model": "accounts/renan-ym76yzx07ofs/models/pii-gold-glm53",
+      "prompt": "plain",
+      "shots": 0,
+      "ground": false,
+      "regex": false,
+      "passes": 1,
+      "llm": true,
+      "reasoning_effort": null,
+      "max_tokens": 8192
+    },
+    "limit": null,
+    "test_sha256": "8b8a0849d8ebcd15fa640b7d678154d9f3f6c2494a465c6889e0d7872dd53e33"
+  },
+  "rows_scored": 500,
+  "rows_errored": 0,
+  "entities": 3309,
+  "recall_strict": 0.980658809307948,
+  "recall_exact": 0.9836808703535811,
+  "precision": 0.9683056872037915,
+  "replaced_tokens": 3376,
+  "false_positive_tokens": 107,
+  "clean_rows": 0.9,
+  "zero_pii_rows": 51,
+  "zero_pii_rows_touched": 5,
+  "per_label": {
+    "BOD": {
+      "n": 157,
+      "recall_strict": 0.9936305732484076,
+      "recall_exact": 0.9936305732484076,
+      "low_n": false
+    },
+    "BUILDING": {
+      "n": 153,
+      "recall_strict": 0.9934640522875817,
+      "recall_exact": 0.9934640522875817,
+      "low_n": false
+    },
+    "CARDISSUER": {
+      "n": 1,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "CITY": {
+      "n": 152,
+      "recall_strict": 0.9736842105263158,
+      "recall_exact": 0.9736842105263158,
+      "low_n": false
+    },
+    "COUNTRY": {
+      "n": 107,
+      "recall_strict": 0.9439252336448598,
+      "recall_exact": 0.9439252336448598,
+      "low_n": false
+    },
+    "DATE": {
+      "n": 104,
+      "recall_strict": 0.9711538461538461,
+      "recall_exact": 0.9711538461538461,
+      "low_n": false
+    },
+    "DRIVERLICENSE": {
+      "n": 147,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "EMAIL": {
+      "n": 171,
+      "recall_strict": 0.9707602339181286,
+      "recall_exact": 0.9707602339181286,
+      "low_n": false
+    },
+    "GEOCOORD": {
+      "n": 19,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "GIVENNAME": {
+      "n": 165,
+      "recall_strict": 0.9818181818181818,
+      "recall_exact": 0.9818181818181818,
+      "low_n": false
+    },
+    "IDCARD": {
+      "n": 155,
+      "recall_strict": 0.9935483870967742,
+      "recall_exact": 0.9935483870967742,
+      "low_n": false
+    },
+    "IP": {
+      "n": 151,
+      "recall_strict": 0.9933774834437086,
+      "recall_exact": 0.9933774834437086,
+      "low_n": false
+    },
+    "LASTNAME": {
+      "n": 181,
+      "recall_strict": 0.9834254143646409,
+      "recall_exact": 0.9834254143646409,
+      "low_n": false
+    },
+    "PASS": {
+      "n": 110,
+      "recall_strict": 0.9090909090909091,
+      "recall_exact": 0.9090909090909091,
+      "low_n": false
+    },
+    "PASSPORT": {
+      "n": 138,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "POSTCODE": {
+      "n": 144,
+      "recall_strict": 0.9930555555555556,
+      "recall_exact": 0.9930555555555556,
+      "low_n": false
+    },
+    "SECADDRESS": {
+      "n": 58,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "SEX": {
+      "n": 100,
+      "recall_strict": 0.98,
+      "recall_exact": 1.0,
+      "low_n": false
+    },
+    "SOCIALNUMBER": {
+      "n": 140,
+      "recall_strict": 0.9928571428571429,
+      "recall_exact": 0.9928571428571429,
+      "low_n": false
+    },
+    "STATE": {
+      "n": 127,
+      "recall_strict": 0.9921259842519685,
+      "recall_exact": 0.9921259842519685,
+      "low_n": false
+    },
+    "STREET": {
+      "n": 148,
+      "recall_strict": 0.9391891891891891,
+      "recall_exact": 0.9797297297297297,
+      "low_n": false
+    },
+    "TEL": {
+      "n": 122,
+      "recall_strict": 0.9754098360655737,
+      "recall_exact": 0.9754098360655737,
+      "low_n": false
+    },
+    "TIME": {
+      "n": 263,
+      "recall_strict": 0.9809885931558935,
+      "recall_exact": 0.9885931558935361,
+      "low_n": false
+    },
+    "TITLE": {
+      "n": 106,
+      "recall_strict": 0.9905660377358491,
+      "recall_exact": 0.9905660377358491,
+      "low_n": false
+    },
+    "USERNAME": {
+      "n": 190,
+      "recall_strict": 0.9842105263157894,
+      "recall_exact": 0.9842105263157894,
+      "low_n": false
+    }
+  },
+  "labeled": {
+    "micro": {
+      "precision": 0.9182464454976303,
+      "recall": 0.9368389241462678,
+      "f1": 0.9274495138369485,
+      "tp": 3100,
+      "fp": 276,
+      "fn": 209
+    },
+    "span": {
+      "precision": 0.9576421800947867,
+      "recall": 0.9770323360531883,
+      "f1": 0.9672400897531788,
+      "tp": 3233,
+      "fp": 143,
+      "fn": 76
+    },
+    "per_label": {
+      "BOD": {
+        "precision": 0.9354838709677419,
+        "recall": 0.9235668789808917,
+        "f1": 0.9294871794871794,
+        "tp": 145,
+        "fp": 10,
+        "fn": 12
+      },
+      "BUILDING": {
+        "precision": 0.9738562091503268,
+        "recall": 0.9738562091503268,
+        "f1": 0.9738562091503268,
+        "tp": 149,
+        "fp": 4,
+        "fn": 4
+      },
+      "CARDISSUER": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "CITY": {
+        "precision": 0.9363057324840764,
+        "recall": 0.9671052631578947,
+        "f1": 0.9514563106796117,
+        "tp": 147,
+        "fp": 10,
+        "fn": 5
+      },
+      "COUNTRY": {
+        "precision": 0.9523809523809523,
+        "recall": 0.9345794392523364,
+        "f1": 0.9433962264150944,
+        "tp": 100,
+        "fp": 5,
+        "fn": 7
+      },
+      "DATE": {
+        "precision": 0.8235294117647058,
+        "recall": 0.9423076923076923,
+        "f1": 0.8789237668161434,
+        "tp": 98,
+        "fp": 21,
+        "fn": 6
+      },
+      "DRIVERLICENSE": {
+        "precision": 0.8389261744966443,
+        "recall": 0.8503401360544217,
+        "f1": 0.8445945945945945,
+        "tp": 125,
+        "fp": 24,
+        "fn": 22
+      },
+      "EMAIL": {
+        "precision": 1.0,
+        "recall": 0.9298245614035088,
+        "f1": 0.9636363636363636,
+        "tp": 159,
+        "fp": 0,
+        "fn": 12
+      },
+      "GEOCOORD": {
+        "precision": 0.9,
+        "recall": 0.9473684210526315,
+        "f1": 0.9230769230769231,
+        "tp": 18,
+        "fp": 2,
+        "fn": 1
+      },
+      "GIVENNAME": {
+        "precision": 0.8491620111731844,
+        "recall": 0.9212121212121213,
+        "f1": 0.883720930232558,
+        "tp": 152,
+        "fp": 27,
+        "fn": 13
+      },
+      "IDCARD": {
+        "precision": 0.8707482993197279,
+        "recall": 0.8258064516129032,
+        "f1": 0.8476821192052979,
+        "tp": 128,
+        "fp": 19,
+        "fn": 27
+      },
+      "IP": {
+        "precision": 0.9868421052631579,
+        "recall": 0.9933774834437086,
+        "f1": 0.9900990099009901,
+        "tp": 150,
+        "fp": 2,
+        "fn": 1
+      },
+      "LASTNAME": {
+        "precision": 0.85,
+        "recall": 0.9392265193370166,
+        "f1": 0.8923884514435695,
+        "tp": 170,
+        "fp": 30,
+        "fn": 11
+      },
+      "PASS": {
+        "precision": 0.7522935779816514,
+        "recall": 0.7454545454545455,
+        "f1": 0.7488584474885845,
+        "tp": 82,
+        "fp": 27,
+        "fn": 28
+      },
+      "PASSPORT": {
+        "precision": 0.8024691358024691,
+        "recall": 0.9420289855072463,
+        "f1": 0.8666666666666666,
+        "tp": 130,
+        "fp": 32,
+        "fn": 8
+      },
+      "POSTCODE": {
+        "precision": 0.9659863945578231,
+        "recall": 0.9861111111111112,
+        "f1": 0.9759450171821307,
+        "tp": 142,
+        "fp": 5,
+        "fn": 2
+      },
+      "SECADDRESS": {
+        "precision": 1.0,
+        "recall": 0.9482758620689655,
+        "f1": 0.9734513274336283,
+        "tp": 55,
+        "fp": 0,
+        "fn": 3
+      },
+      "SEX": {
+        "precision": 0.9803921568627451,
+        "recall": 1.0,
+        "f1": 0.99009900990099,
+        "tp": 100,
+        "fp": 2,
+        "fn": 0
+      },
+      "SOCIALNUMBER": {
+        "precision": 0.9565217391304348,
+        "recall": 0.9428571428571428,
+        "f1": 0.9496402877697843,
+        "tp": 132,
+        "fp": 6,
+        "fn": 8
+      },
+      "STATE": {
+        "precision": 0.9920634920634921,
+        "recall": 0.984251968503937,
+        "f1": 0.9881422924901185,
+        "tp": 125,
+        "fp": 1,
+        "fn": 2
+      },
+      "STREET": {
+        "precision": 0.9863945578231292,
+        "recall": 0.9797297297297297,
+        "f1": 0.983050847457627,
+        "tp": 145,
+        "fp": 2,
+        "fn": 3
+      },
+      "TEL": {
+        "precision": 0.9913793103448276,
+        "recall": 0.9426229508196722,
+        "f1": 0.9663865546218487,
+        "tp": 115,
+        "fp": 1,
+        "fn": 7
+      },
+      "TIME": {
+        "precision": 0.9444444444444444,
+        "recall": 0.9695817490494296,
+        "f1": 0.9568480300187617,
+        "tp": 255,
+        "fp": 15,
+        "fn": 8
+      },
+      "TITLE": {
+        "precision": 0.8879310344827587,
+        "recall": 0.9716981132075472,
+        "f1": 0.927927927927928,
+        "tp": 103,
+        "fp": 13,
+        "fn": 3
+      },
+      "USERNAME": {
+        "precision": 0.90625,
+        "recall": 0.9157894736842105,
+        "f1": 0.9109947643979057,
+        "tp": 174,
+        "fp": 18,
+        "fn": 16
+      }
+    }
+  },
+  "leaks": [
+    {
+      "id": "46278A",
+      "label": "PASS",
+      "value": "E:7'Bxfz<9"
+    },
+    {
+      "id": "51555",
+      "label": "TEL",
+      "value": "078.3220361"
+    },
+    {
+      "id": "52110B",
+      "label": "PASS",
+      "value": "\\oU(6y8YY"
+    },
+    {
+      "id": "49274B",
+      "label": "USERNAME",
+      "value": "Unnamed"
+    },
+    {
+      "id": "40898",
+      "label": "DATE",
+      "value": "2047-06-07T00:00:00"
+    },
+    {
+      "id": "47376A",
+      "label": "STREET",
+      "value": "State Route 380"
+    },
+    {
+      "id": "40779B",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "51882C",
+      "label": "COUNTRY",
+      "value": "US"
+    },
+    {
+      "id": "49869G",
+      "label": "EMAIL",
+      "value": "WKB@hotmail.com"
+    },
+    {
+      "id": "51356C",
+      "label": "STREET",
+      "value": "Revlett Stroud Road"
+    },
+    {
+      "id": "49028B",
+      "label": "IP",
+      "value": "186.101.78.234"
+    },
+    {
+      "id": "42542C",
+      "label": "GIVENNAME",
+      "value": "UNKNOWN"
+    },
+    {
+      "id": "42542C",
+      "label": "LASTNAME",
+      "value": "UNKNOWN"
+    },
+    {
+      "id": "42594B",
+      "label": "POSTCODE",
+      "value": "WR2"
+    },
+    {
+      "id": "43103B",
+      "label": "CITY",
+      "value": "Oxford"
+    },
+    {
+      "id": "47947B",
+      "label": "EMAIL",
+      "value": "BN@yahoo.com"
+    },
+    {
+      "id": "49845C",
+      "label": "STREET",
+      "value": "Loran Station Road"
+    },
+    {
+      "id": "43214C",
+      "label": "STREET",
+      "value": "Crabtree Lane"
+    },
+    {
+      "id": "43214C",
+      "label": "STREET",
+      "value": "Holme Wood Lane"
+    },
+    {
+      "id": "43214C",
+      "label": "STREET",
+      "value": "Swallow House Lane"
+    },
+    {
+      "id": "42448D",
+      "label": "EMAIL",
+      "value": "gylymsere@outlook.com"
+    },
+    {
+      "id": "50434D",
+      "label": "PASS",
+      "value": "JJh9\"i{77"
+    },
+    {
+      "id": "49682J",
+      "label": "TITLE",
+      "value": "Pr"
+    },
+    {
+      "id": "46121B",
+      "label": "PASS",
+      "value": "t/W\"4d(%4R"
+    },
+    {
+      "id": "46121B",
+      "label": "PASS",
+      "value": "d\"Dq6.%i+"
+    },
+    {
+      "id": "51583B",
+      "label": "TIME",
+      "value": "15 o'clock"
+    },
+    {
+      "id": "51472",
+      "label": "GIVENNAME",
+      "value": "Róisín"
+    },
+    {
+      "id": "47187",
+      "label": "SEX",
+      "value": "Prefer not to disclose"
+    },
+    {
+      "id": "49226C",
+      "label": "BUILDING",
+      "value": "902"
+    },
+    {
+      "id": "49226C",
+      "label": "STREET",
+      "value": "Dundee Street"
+    },
+    {
+      "id": "50978B",
+      "label": "LASTNAME",
+      "value": "Unknown"
+    },
+    {
+      "id": "42059B",
+      "label": "DATE",
+      "value": "11th June 1967"
+    },
+    {
+      "id": "47305A",
+      "label": "USERNAME",
+      "value": "USERNAME_A"
+    },
+    {
+      "id": "43334E",
+      "label": "PASS",
+      "value": "^bT\\\\5jETn1"
+    },
+    {
+      "id": "47025K",
+      "label": "SOCIALNUMBER",
+      "value": "null"
+    },
+    {
+      "id": "47025K",
+      "label": "TEL",
+      "value": "null"
+    },
+    {
+      "id": "48894",
+      "label": "TIME",
+      "value": "4 PM"
+    },
+    {
+      "id": "43857B",
+      "label": "BOD",
+      "value": "Chakra balancing"
+    },
+    {
+      "id": "43857B",
+      "label": "CITY",
+      "value": "Acupuncture"
+    },
+    {
+      "id": "52226A",
+      "label": "DATE",
+      "value": "2"
+    },
+    {
+      "id": "52226A",
+      "label": "CITY",
+      "value": "Atlanta"
+    },
+    {
+      "id": "52226A",
+      "label": "TIME",
+      "value": "2"
+    },
+    {
+      "id": "47163A",
+      "label": "IDCARD",
+      "value": "ECO2023001"
+    },
+    {
+      "id": "49044D",
+      "label": "TIME",
+      "value": "18 o'clock"
+    },
+    {
+      "id": "51121B",
+      "label": "EMAIL",
+      "value": "support@votingrights.com"
+    },
+    {
+      "id": "53048C",
+      "label": "STREET",
+      "value": "Devils Punch Bowl Road"
+    },
+    {
+      "id": "53036D",
+      "label": "STATE",
+      "value": "MN"
+    },
+    {
+      "id": "52805D",
+      "label": "COUNTRY",
+      "value": "United States"
+    },
+    {
+      "id": "48559A",
+      "label": "USERNAME",
+      "value": "101"
+    },
+    {
+      "id": "45884D",
+      "label": "COUNTRY",
+      "value": "GB"
+    },
+    {
+      "id": "45342C",
+      "label": "TIME",
+      "value": "3"
+    },
+    {
+      "id": "48044A",
+      "label": "COUNTRY",
+      "value": "United States"
+    },
+    {
+      "id": "52738B",
+      "label": "CITY",
+      "value": "Jackson"
+    },
+    {
+      "id": "52738B",
+      "label": "PASS",
+      "value": "w:Pb\"8cETt"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "IifG%O\\\"6"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "|\\\\#I9wvq"
+    },
+    {
+      "id": "49387B",
+      "label": "PASS",
+      "value": "8\\\"FaYm"
+    },
+    {
+      "id": "40834B",
+      "label": "TEL",
+      "value": "N/A"
+    },
+    {
+      "id": "40834B",
+      "label": "GIVENNAME",
+      "value": "N/A"
+    },
+    {
+      "id": "40834B",
+      "label": "LASTNAME",
+      "value": "N/A"
+    },
+    {
+      "id": "43774B",
+      "label": "EMAIL",
+      "value": "C@gmail.com"
+    },
+    {
+      "id": "45133C",
+      "label": "COUNTRY",
+      "value": "Great Britain"
+    },
+    {
+      "id": "48780C",
+      "label": "STREET",
+      "value": "State Highway 160"
+    },
+    {
+      "id": "48411C",
+      "label": "COUNTRY",
+      "value": "United States"
+    }
+  ]
+}
