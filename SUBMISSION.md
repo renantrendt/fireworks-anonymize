@@ -60,9 +60,9 @@ Every row comes from `scripts/harness.py` and its scorer; the fine-tuned model r
 | Plain prompt, stock (L1) | 84.5% | 98.8% | 4.0 |
 | Best harness, stock (L5) | 88.1% | 99.0% | 3.8 |
 | **Plain prompt, fine-tuned** | **92.7%** | 98.1% | 2.4 |
-| Best harness (L5), fine-tuned | 91.7% | **99.2%** | 3.0 |
+| Best harness (L5), fine-tuned | 91.7% | **99.0%** | 3.0 |
 
-The fine-tune gives the best typed F1 on its own. Adding the harness lowers typed F1 by 1 point but removes more values (99.2% leak recall) and leaves more texts fully clean (94.8% against 90.0%). Seconds per text here include retries after rate limits; on its own the fine-tune answered in 0.9 s (p50).
+The fine-tune gives the best typed F1 on its own. Adding the harness lowers typed F1 by 1 point but removes more values (99.0% leak recall, the same as the stock L5) and leaves more texts fully clean (94.8% against 90.0%). Seconds per text here include retries after rate limits; on its own the fine-tune answered in 0.9 s (p50).
 
 Our own scorer (`scripts/score_fireworks.py`, value match only) gives the same order. Rows with every value right and nothing extra: stock 52.8%, 8-example prompt 57.8%, Kimi K3 56.2%, fine-tune 79.0% (77.8% on a second scoring run).
 
