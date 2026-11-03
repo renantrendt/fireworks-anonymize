@@ -69,7 +69,7 @@ def layers_chart(res: dict, out: Path) -> None:
         ax.set_xticks([0, 25, 50, 75, 100])
         ax.set_title(title, fontsize=10.5)
         clean(ax)
-    fig.suptitle("Each layer adds one change to the one below it (glm-5p3-flash, 500 test rows)",
+    fig.suptitle("Prompt harness (L1-L5) and LoRA fine-tune (L6) on glm-5p3-flash, 500 test texts",
                  x=0.01, ha="left", fontsize=12, fontweight="bold", y=0.99)
     fig.savefig(out, bbox_inches="tight")
     plt.close(fig)

@@ -221,6 +221,8 @@ def report(prefix: str, entries: list[dict], rows: list[dict]) -> str:
             prev = entries[i - 1]
             if prev is not base and prev["layer"] != "L0":
                 pairs.append((prev, e))               # what this one layer added
+            by_layer = {x["layer"]: x for x in entries}
+            pairs += [(by_layer[v], e) for v in e.get("vs", []) if v in by_layer]
         for old, new in pairs:
             m = mcnemar(old["out"]["hit"], new["out"]["hit"])
             b = bootstrap(old["out"]["rows"], new["out"]["rows"])
@@ -253,7 +255,10 @@ def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--model", default="glm-5p3-flash")
     p.add_argument("--prefix", default=None, help="Run name prefix (default: the model id)")
-    p.add_argument("--partner", default=None, help="Finished run to union with the best layer (L6)")
+    p.add_argument("--partner", default=None, help="Finished run to union with the last layer (reported as 'U')")
+    p.add_argument("--extra", action="append", default=[],
+                   help="Add a finished run as a layer: LAYER=RUN=DESCRIPTION[=VS], e.g. "
+                        "'L6=lora-L1=LoRA fine-tune, plain prompt'. VS adds one more comparison.")
     p.add_argument("--layers", default=None, help="Comma list to run, e.g. L1,L2 (default: all)")
     p.add_argument("--limit", type=int, default=None)
     p.add_argument("--workers", type=int, default=8)
@@ -273,12 +278,18 @@ def main() -> int:
 
     if args.partner and entries:
         last = entries[-1]
-        run = f"{prefix}-L6"
+        run = f"{prefix}-union"
         union_run(run, last["run"], args.partner, rows)
         meta = {"run": run, "backend": "union", "gliner": "off", "system": "harness-union",
                 "parts": [last["run"], args.partner]}
         ev.finish(ev.RUNS_DIR / run, rows, meta)
-        entries.append({"layer": "L6", "desc": f"+ union with {args.partner.replace('harness-', '')}", "run": run})
+        entries.append({"layer": "U", "desc": f"+ union with {args.partner.replace('harness-', '')}", "run": run})
+
+    for spec in args.extra:
+        layer, run, desc, *vs = spec.split("=")
+        if not (ev.RUNS_DIR / run / "report.json").exists():
+            sys.exit(f"ERROR --extra: no report for run {run}")
+        entries.append({"layer": layer, "desc": desc, "run": run, "vs": vs})
 
     print("\n" + report(prefix, entries, rows))
     print(f"Wrote {EXP_DIR / prefix / 'results.md'}")

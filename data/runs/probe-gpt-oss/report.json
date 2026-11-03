@@ -1,0 +1,427 @@
+{
+  "meta": {
+    "run": "probe-gpt-oss",
+    "backend": "accounts/fireworks/models/gpt-oss-120b",
+    "gliner": "off",
+    "system": "harness",
+    "config": {
+      "model": "gpt-oss-120b",
+      "prompt": "guide",
+      "shots": 3,
+      "ground": true,
+      "regex": true,
+      "passes": 1,
+      "llm": true,
+      "reasoning_effort": null,
+      "max_tokens": 8192
+    },
+    "limit": 20,
+    "test_sha256": "8b8a0849d8ebcd15fa640b7d678154d9f3f6c2494a465c6889e0d7872dd53e33"
+  },
+  "rows_scored": 20,
+  "rows_errored": 0,
+  "entities": 107,
+  "recall_strict": 0.9345794392523364,
+  "recall_exact": 0.9345794392523364,
+  "precision": 0.9351851851851852,
+  "replaced_tokens": 108,
+  "false_positive_tokens": 7,
+  "clean_rows": 0.75,
+  "zero_pii_rows": 2,
+  "zero_pii_rows_touched": 0,
+  "per_label": {
+    "BOD": {
+      "n": 5,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "BUILDING": {
+      "n": 3,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "CITY": {
+      "n": 2,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "COUNTRY": {
+      "n": 5,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "DATE": {
+      "n": 2,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "DRIVERLICENSE": {
+      "n": 4,
+      "recall_strict": 0.75,
+      "recall_exact": 0.75,
+      "low_n": true
+    },
+    "EMAIL": {
+      "n": 5,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "GEOCOORD": {
+      "n": 1,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "GIVENNAME": {
+      "n": 5,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "IDCARD": {
+      "n": 6,
+      "recall_strict": 0.8333333333333334,
+      "recall_exact": 0.8333333333333334,
+      "low_n": true
+    },
+    "IP": {
+      "n": 7,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "LASTNAME": {
+      "n": 8,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "PASS": {
+      "n": 4,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "PASSPORT": {
+      "n": 3,
+      "recall_strict": 0.6666666666666666,
+      "recall_exact": 0.6666666666666666,
+      "low_n": true
+    },
+    "POSTCODE": {
+      "n": 2,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "SECADDRESS": {
+      "n": 1,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "SEX": {
+      "n": 2,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "SOCIALNUMBER": {
+      "n": 5,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "STATE": {
+      "n": 2,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "STREET": {
+      "n": 3,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "TEL": {
+      "n": 9,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    },
+    "TIME": {
+      "n": 13,
+      "recall_strict": 0.7692307692307693,
+      "recall_exact": 0.7692307692307693,
+      "low_n": false
+    },
+    "TITLE": {
+      "n": 3,
+      "recall_strict": 0.6666666666666666,
+      "recall_exact": 0.6666666666666666,
+      "low_n": true
+    },
+    "USERNAME": {
+      "n": 7,
+      "recall_strict": 1.0,
+      "recall_exact": 1.0,
+      "low_n": true
+    }
+  },
+  "labeled": {
+    "micro": {
+      "precision": 0.8055555555555556,
+      "recall": 0.8130841121495327,
+      "f1": 0.8093023255813954,
+      "tp": 87,
+      "fp": 21,
+      "fn": 20
+    },
+    "span": {
+      "precision": 0.8148148148148148,
+      "recall": 0.822429906542056,
+      "f1": 0.8186046511627906,
+      "tp": 88,
+      "fp": 20,
+      "fn": 19
+    },
+    "per_label": {
+      "BOD": {
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 1,
+        "fn": 0
+      },
+      "BUILDING": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "fp": 1,
+        "fn": 1
+      },
+      "CITY": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4,
+        "tp": 1,
+        "fp": 2,
+        "fn": 1
+      },
+      "COUNTRY": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1": 0.8000000000000002,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1
+      },
+      "DATE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "DRIVERLICENSE": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1
+      },
+      "EMAIL": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0
+      },
+      "GEOCOORD": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "GIVENNAME": {
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 1,
+        "fn": 0
+      },
+      "IDCARD": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 0,
+        "fn": 1
+      },
+      "IP": {
+        "precision": 0.7777777777777778,
+        "recall": 1.0,
+        "f1": 0.8750000000000001,
+        "tp": 7,
+        "fp": 2,
+        "fn": 0
+      },
+      "LASTNAME": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 8,
+        "fp": 0,
+        "fn": 0
+      },
+      "PASS": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 2,
+        "fn": 2
+      },
+      "PASSPORT": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 2,
+        "fp": 0,
+        "fn": 1
+      },
+      "POSTCODE": {
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4,
+        "tp": 1,
+        "fp": 2,
+        "fn": 1
+      },
+      "SECADDRESS": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 1,
+        "fn": 1
+      },
+      "SEX": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "SOCIALNUMBER": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1": 0.8000000000000002,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1
+      },
+      "STATE": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 1,
+        "fp": 1,
+        "fn": 1
+      },
+      "STREET": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "fp": 1,
+        "fn": 1
+      },
+      "TEL": {
+        "precision": 0.9,
+        "recall": 1.0,
+        "f1": 0.9473684210526316,
+        "tp": 9,
+        "fp": 1,
+        "fn": 0
+      },
+      "TIME": {
+        "precision": 0.9,
+        "recall": 0.6923076923076923,
+        "f1": 0.7826086956521738,
+        "tp": 9,
+        "fp": 1,
+        "fn": 4
+      },
+      "TITLE": {
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "tp": 1,
+        "fp": 0,
+        "fn": 2
+      },
+      "USERNAME": {
+        "precision": 0.875,
+        "recall": 1.0,
+        "f1": 0.9333333333333333,
+        "tp": 7,
+        "fp": 1,
+        "fn": 0
+      }
+    }
+  },
+  "leaks": [
+    {
+      "id": "47198A",
+      "label": "IDCARD",
+      "value": "485888052352"
+    },
+    {
+      "id": "46627A",
+      "label": "DRIVERLICENSE",
+      "value": "TROEL907130TG126"
+    },
+    {
+      "id": "46627A",
+      "label": "PASSPORT",
+      "value": "428980156"
+    },
+    {
+      "id": "46278A",
+      "label": "TITLE",
+      "value": "King"
+    },
+    {
+      "id": "51555",
+      "label": "TIME",
+      "value": "02"
+    },
+    {
+      "id": "51555",
+      "label": "TIME",
+      "value": "16"
+    },
+    {
+      "id": "41812",
+      "label": "TIME",
+      "value": "09"
+    }
+  ]
+}
