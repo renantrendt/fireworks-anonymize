@@ -238,17 +238,7 @@ A second scoring run of the same fine-tune gave 77.8%; the gap is run-to-run noi
 | Test (all 500 texts, 8 in parallel) | about 3 min | not computed in dollars |
 | Inference, one text | 1.7 s mean (L6); 0.9 s p50 on the value-only run | 256k input and 119k output tokens per 1,000 texts (L1 stock: 256k and 555k) |
 
-## 5. Self-assessment against the rubric
-
-| Criterion | Weight | What this project shows | Where it would lose points |
-|---|---|---|---|
-| Benchmark | 40% | One locked test set; rules → prompt → harness → fine-tune, each scored on the same texts; every step tested with McNemar and bootstrap, including fine-tune vs best harness; a second scorer agrees | Synthetic English data; one training run |
-| Business value | 25% | A named user, a working router demo, faster and shorter answers than the best harness | No user interviews; no cost per 1,000 texts in dollars yet |
-| Technical execution | 20% | Base model chosen against three others; layered harness with each layer tested; fine-tune; teacher-filtered set; latency and tokens measured | RL ("consolidate") not run; no hyperparameter sweep |
-| Presentation & demo | 10% | Deck with before/after charts; router demo; 60-second video | The narration is a voice clone of the presenter |
-| Documentation | 5% | This file; every scored row saved; run commands below | Training cost not checked against billing |
-
-## 6. Limitations and disclosures
+## 5. Limitations and disclosures
 
 - **Synthetic data.** The texts are generated, in English only and under 512 characters. Real legal files are longer and messier.
 - **The model choice touched the test set.** The base model and its reasoning setting were picked from a 20-text probe on test rows rather than a separate dev set. No prompt was tuned on the test set afterwards; examples and training data come from the train split.
@@ -259,7 +249,7 @@ A second scoring run of the same fine-tune gave 77.8%; the gap is run-to-run noi
 - **Cost is in tokens, not dollars.** `data/experiments/glm-5p3-flash/results.md` lists input and output tokens per text for each layer.
 - **Fireworks receives the raw text.** Only the company's own deployment sees personal data; the user's chosen model sees placeholders. The router is a script, not yet a Claude Code hook.
 
-## 7. Next
+## 6. Next
 
 1. Train on the teacher-filtered set, then RL with the same scorer as the reward (import, then consolidate).
 2. A frontier comparison (GPT and Claude) on the same 500 texts, with cost per 1,000 texts.
