@@ -177,7 +177,7 @@ Each layer is one or two API calls per text, with 8 requests in parallel; the wh
 - **Numbered labels are merged.** LASTNAME1/2/3 become LASTNAME and GIVENNAME1/2 become GIVENNAME, because the numbering is an artifact of how the data was generated.
 - **One test set, one run per layer.** Temperature 0 makes runs repeatable, but we did not test other seeds or other samples of the data.
 - **Cost is reported in tokens, not dollars.** `results.md` has input and output tokens per text for each layer.
-- **Fine-tuning and a frontier comparison are next.** A LoRA fine-tune of `glm-5p3-flash` on the train split (L7) was then run: through this same harness and scorer it reaches 92.7% typed F1 with the plain prompt (`data/runs/lora-L1/`, `data/runs/lora-L5/`; see SUBMISSION.md, Step 5).
+- **Fine-tuning and a frontier comparison are next.** A LoRA fine-tune of `glm-5p3-flash` on the train split (L7) was then run: through this same harness and scorer it reaches 92.7% typed F1 with the plain prompt (`data/runs/lora-L1/`, `data/runs/lora-L5/`; see README.md, section 5).
 
 ## The rest of this repository
 
