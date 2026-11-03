@@ -2,7 +2,7 @@
 
 We built a model that finds personal data in text before the text is sent to an outside AI model. We started from rules, then a plain prompt on GLM 5.3 Flash, then a layered prompt harness, then a LoRA fine-tune. All of it was scored on the same 500 locked test texts.
 
-**Headline:** the best prompt harness raises typed F1 from 84.5% to 88.1%. The LoRA fine-tune of GLM 5.3 Flash goes further: rows fully correct rise from 52.8% to 79.0% (McNemar p < 0.0001), and on our re-scoring with the harness metrics it reaches about 91.5% typed F1. It beats its teacher, Kimi K3, and answers in 0.9 s per text against 3.8 s for the best harness.
+**Headline:** the best prompt harness raises typed F1 from 84.5% to 88.1%. The LoRA fine-tune of GLM 5.3 Flash, with the same plain prompt, reaches **92.7% typed F1** (+8.2 over the plain prompt, +4.6 over the best harness). Wrapped in the full L5 harness it removes 99.0% of personal values and leaves 94.8% of texts with no leak. It beats its teacher, Kimi K3, on every measure.
 
 Code, data and every scored row are in this repo. The deck: https://claude.ai/artifact/7xvUxa8vTG42FAfF3fEtiw
 
@@ -53,16 +53,16 @@ We also built the "import" set from the Fireworks livestream recipe. Kimi K3 lab
 
 ## Step 5: Results
 
-Stock rows come from `scripts/harness.py`. Fine-tuned rows are explained under the table.
+Every row comes from `scripts/harness.py` and its scorer; the fine-tuned model replaces the stock one. Runs: `data/runs/lora-L1/`, `data/runs/lora-L5/`.
 
 | System | Typed F1 | Leak recall | Seconds per text |
 |---|---|---|---|
 | Plain prompt, stock (L1) | 84.5% | 98.8% | 4.0 |
 | Best harness, stock (L5) | 88.1% | 99.0% | 3.8 |
-| **Plain prompt, fine-tuned** | **91.5%\*** | **98.1%\*** | **0.9** |
-| Best harness, fine-tuned | running | running | running |
+| **Plain prompt, fine-tuned** | **92.7%** | 98.1% | 2.4 |
+| Best harness (L5), fine-tuned | 91.7% | **99.2%** | 3.0 |
 
-\* Re-scored from the fine-tune's saved predictions with our own copy of the typed-F1 and leak-recall definitions; its prompt is our plain prompt, not L1's. The run through `scripts/harness.py` itself is in progress and will replace these numbers.
+The fine-tune gives the best typed F1 on its own. Adding the harness lowers typed F1 by 1 point but removes more values (99.2% leak recall) and leaves more texts fully clean (94.8% against 90.0%). Seconds per text here include retries after rate limits; on its own the fine-tune answered in 0.9 s (p50).
 
 Our own scorer (`scripts/score_fireworks.py`, value match only) gives the same order. Rows with every value right and nothing extra: stock 52.8%, 8-example prompt 57.8%, Kimi K3 56.2%, fine-tune 79.0% (77.8% on a second scoring run).
 
