@@ -1,5 +1,7 @@
 # PII redaction with a fine-tuned open model on Fireworks
 
+[![Watch the 60-second video](docs/video-thumb.png)](docs/pii-redaction-60s.mp4)
+
 We built a model that finds personal data (PII) in text, so it can be masked before the text is sent to an outside AI model. We picked a small open model, `glm-5p3-flash`, measured a plain prompt, improved it one layer at a time with a prompt harness, and then fine-tuned it with LoRA. Every step was scored on the same 500 locked test texts and checked with two statistical tests.
 
 **Headline:** typed F1 goes from **84.5%** with a plain prompt to **88.1%** with the best prompt harness, and to **92.7%** with the LoRA fine-tune: +4.6 points over the best harness (McNemar p < 0.0001, bootstrap 95% range +3.0 to +6.4) and +8.3 over the plain prompt. Wrapped in the full harness, the fine-tuned model removes **99.0%** of personal values and leaves **94.8%** of texts with no leak.
