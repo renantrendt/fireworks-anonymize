@@ -6,7 +6,7 @@ We built a model that finds personal data (PII) in text, so it can be masked bef
 
 ![Typed F1 and leak recall: rules, plain prompt, best harness, fine-tune](data/experiments/finetune/headline.png)
 
-Slides: [docs/deck.pdf](docs/deck.pdf)
+Slides: [docs/deck.pdf](docs/deck.pdf) · 60-second video: [docs/pii-redaction-60s.mp4](docs/pii-redaction-60s.mp4)
 
 **Disclosure.** The offline anonymizer in `scripts/anonymize.py` existed before the event; it was built for Brazilian legal documents and copied into this repo on the day from earlier private work. Everything else here was built on the day. We used AI coding assistants (Claude Code, Cursor) throughout.
 
@@ -230,6 +230,14 @@ Prompting improved addresses, names and dates, but it made the ID-number labels 
 
 A second scoring run of the same fine-tune gave 77.8%; the gap is run-to-run noise. More examples in the prompt and a much larger stock model both stay far below the fine-tune.
 
+### Cost and time
+
+| Step | Time | Cost |
+|---|---|---|
+| Train (LoRA, 1,000 rows, 3 epochs) | 17 min (job timestamps) | $11.12, Fireworks job estimate in `runs/finetune-job.json`; not checked against the invoice |
+| Test (all 500 texts, 8 in parallel) | about 3 min | not computed in dollars |
+| Inference, one text | 1.7 s mean (L6); 0.9 s p50 on the value-only run | 256k input and 119k output tokens per 1,000 texts (L1 stock: 256k and 555k) |
+
 ## 5. Self-assessment against the rubric
 
 | Criterion | Weight | What this project shows | Where it would lose points |
@@ -237,7 +245,7 @@ A second scoring run of the same fine-tune gave 77.8%; the gap is run-to-run noi
 | Benchmark | 40% | One locked test set; rules → prompt → harness → fine-tune, each scored on the same texts; every step tested with McNemar and bootstrap, including fine-tune vs best harness; a second scorer agrees | Synthetic English data; one training run |
 | Business value | 25% | A named user, a working router demo, faster and shorter answers than the best harness | No user interviews; no cost per 1,000 texts in dollars yet |
 | Technical execution | 20% | Base model chosen against three others; layered harness with each layer tested; fine-tune; teacher-filtered set; latency and tokens measured | RL ("consolidate") not run; no hyperparameter sweep |
-| Presentation & demo | 10% | Deck with before/after charts; router demo | Video not linked here |
+| Presentation & demo | 10% | Deck with before/after charts; router demo; 60-second video | The narration is a voice clone of the presenter |
 | Documentation | 5% | This file; every scored row saved; run commands below | Training cost not checked against billing |
 
 ## 6. Limitations and disclosures

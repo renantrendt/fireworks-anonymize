@@ -23,5 +23,10 @@
    "state": "JOB_STATE_COMPLETED",
    "transitionTime": "2026-11-02T23:27:16.461712585Z"
   }
- ]
+ ],
+ "estimatedCost": {
+  "currencyCode": "USD",
+  "nanos": 121600151,
+  "units": "11"
+ }
 }
