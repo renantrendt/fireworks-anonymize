@@ -6,7 +6,7 @@ We built a model that finds personal data (PII) in text, so it can be masked bef
 
 ![Typed F1 and leak recall: rules, plain prompt, best harness, fine-tune](data/experiments/finetune/headline.png)
 
-Deck: https://claude.ai/artifact/7xvUxa8vTG42FAfF3fEtiw
+Slides: [docs/deck.pdf](docs/deck.pdf)
 
 **Disclosure.** The offline anonymizer in `scripts/anonymize.py` existed before the event; it was built for Brazilian legal documents and copied into this repo on the day from earlier private work. Everything else here was built on the day. We used AI coding assistants (Claude Code, Cursor) throughout.
 
